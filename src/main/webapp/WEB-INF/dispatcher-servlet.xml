@@ -34,12 +34,12 @@
     <property name="defaultEncoding" value="UTF-8"></property>
   </bean>
 
-  <!--<mvc:interceptors>-->
-    <!--<mvc:interceptor>-->
-      <!--<mvc:mapping path="/**"/>-->
+  <mvc:interceptors>
+    <mvc:interceptor>
+      <mvc:mapping path="/**"/>
       <!--<mvc:exclude-mapping path="/shareMgr/articles" />-->
-      <!--<mvc:exclude-mapping path="/redirectLogin" />-->
-      <!--<bean class="com.snail.interceptor.SsoInterceptor"/>-->
-    <!--</mvc:interceptor>-->
-  <!--</mvc:interceptors>-->
+      <mvc:exclude-mapping path="/redirectLogin" />
+      <bean class="com.snail.interceptor.SsoInterceptor"/>
+    </mvc:interceptor>
+  </mvc:interceptors>
 </beans>
