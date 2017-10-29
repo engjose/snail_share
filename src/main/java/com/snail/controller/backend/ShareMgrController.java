@@ -1,6 +1,7 @@
 package com.snail.controller.backend;
 
 import com.snail.commen.ResultMap;
+import com.snail.interceptor.ParameterThreadLocal;
 import com.snail.pojo.form.ShareForm;
 import com.snail.service.base.IShareService;
 import java.util.Enumeration;
@@ -34,7 +35,7 @@ public class ShareMgrController {
      * @param shareForm
      */
     @RequestMapping(value = "/articles", method = RequestMethod.POST)
-    public ResultMap addShare(@RequestBody ShareForm shareForm, HttpSession session, HttpServletRequest request) {
+    public ResultMap addShare(@RequestBody ShareForm shareForm, HttpSession session) {
         return ResultMap.getResultMap(200, "添加成功", iShareService.insertShare(shareForm, session));
     }
 }

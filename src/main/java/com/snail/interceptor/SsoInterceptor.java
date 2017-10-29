@@ -16,19 +16,30 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String xToken = request.getHeader("xToken");
+        String xToken = request.getParameter("xToken");
         Jedis jedis = JedisClientUtil.getJedis();
-
-        String userLogin = null;
+        String loginName = null;
         if (StringUtils.isNotBlank(xToken)) {
-             userLogin = jedis.get(xToken);
+            loginName = jedis.get(xToken);
             JedisClientUtil.closeJedis(jedis);
         }
 
-        if (StringUtils.isBlank(userLogin)) {
+        if (StringUtils.isBlank(loginName)) {
             response.sendError(403, "没有权限");
             return false;
         }
+
+        setUserParams(xToken, "aa");
         return true;
+    }
+
+    /**
+     * 设置用户信息与线程参数
+     *
+     * @param xToken
+     */
+    private void setUserParams(String xToken, String loginName) {
+        ParameterThreadLocal.getToken().set(xToken);
+        ParameterThreadLocal.getLoginName().set(loginName);
     }
 }
