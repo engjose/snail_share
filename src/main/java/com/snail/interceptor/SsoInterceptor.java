@@ -19,17 +19,23 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
         String xToken = request.getParameter("xToken");
         Jedis jedis = JedisClientUtil.getJedis();
         String loginName = null;
+        Integer userId = null;
         if (StringUtils.isNotBlank(xToken)) {
-            loginName = jedis.get(xToken);
+            String loginNameAndUserId = jedis.get(xToken);
+            String[] strArr = loginNameAndUserId.split(":");
+            if(strArr.length > 0) {
+                loginName = strArr[0];
+                userId = Integer.valueOf(strArr[1]);
+            }
             JedisClientUtil.closeJedis(jedis);
         }
 
-        if (StringUtils.isBlank(loginName)) {
+        if (StringUtils.isBlank(loginName) && userId != null) {
             response.sendError(403, "没有权限");
             return false;
         }
 
-        setUserParams(xToken, "aa");
+        setUserParams(xToken, loginName, userId);
         return true;
     }
 
@@ -37,9 +43,12 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
      * 设置用户信息与线程参数
      *
      * @param xToken
+     * @param loginName
+     * @param userId
      */
-    private void setUserParams(String xToken, String loginName) {
+    private void setUserParams(String xToken, String loginName, Integer userId) {
         ParameterThreadLocal.getToken().set(xToken);
+        ParameterThreadLocal.getUid().set(userId);
         ParameterThreadLocal.getLoginName().set(loginName);
     }
 }
