@@ -148,7 +148,7 @@ public class ShareServiceImpl implements IShareService {
         //删除本地文件
         htmlFile.delete();
 
-        return SHARE_URL_PREFIX + contentId + ".html";
+        return contentId + ".html";
     }
 
 

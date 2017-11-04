@@ -31,7 +31,9 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
             JedisClientUtil.closeJedis(jedis);
         }
 
-        if (StringUtils.isBlank(loginName) && userId != null) {
+        //只拦截非GET请求的数据 && 用户非登录
+        String method = request.getMethod();
+        if ((StringUtils.isBlank(loginName) || userId == null) && !"GET".equals(method)) {
             response.sendError(403, "没有权限");
             return false;
         }
@@ -50,7 +52,7 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
     private void setUserParams(String xToken, String loginName, Integer userId, String app) {
         ParameterThreadLocal.getToken().set(xToken);
         ParameterThreadLocal.getUid().set(userId);
+        ParameterThreadLocal.getApp().set(app);
         ParameterThreadLocal.getLoginName().set(loginName);
-        ParameterThreadLocal.getLoginName().set(app);
     }
 }
