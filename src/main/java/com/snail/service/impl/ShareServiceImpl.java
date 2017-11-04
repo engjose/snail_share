@@ -71,6 +71,9 @@ public class ShareServiceImpl implements IShareService {
         shareInfoExample.setOrderByClause("create_at desc");
         PageHelper.startPage(pageNo, pageSize);
         List<ShareInfo> shareInfos = shareInfoMapper.selectByExample(shareInfoExample);
+        for (ShareInfo shareInfo: shareInfos) {
+            shareInfo.setShareUrl(SHARE_URL_PREFIX + shareInfo.getShareUrl());
+        }
         PageInfo<ShareInfo> pageInfo = new PageInfo(shareInfos);
 
         Map<String, Object> result = Maps.newHashMap();
@@ -138,7 +141,7 @@ public class ShareServiceImpl implements IShareService {
         example.createCriteria().andIdEqualTo(tag.getId());
         int result = shareTagMapper.updateByExampleSelective(tag, example);
 
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     /**
@@ -156,7 +159,7 @@ public class ShareServiceImpl implements IShareService {
         BeanUtils.copyProperties(tagForm, tag);
         int result = shareTagMapper.insert(tag);
 
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     /**
