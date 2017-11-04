@@ -4,20 +4,22 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.snail.commen.ExceptionCode;
+import com.snail.commen.ResponseCode;
 import com.snail.dao.ShareContentMapper;
 import com.snail.dao.ShareInfoMapper;
 import com.snail.dao.ShareTagMapper;
-import com.snail.pojo.domain.ShareContent;
-import com.snail.pojo.domain.ShareInfo;
-import com.snail.pojo.domain.ShareInfoExample;
-import com.snail.pojo.domain.ShareTag;
+import com.snail.exception.SnailClientException;
+import com.snail.pojo.domain.*;
 import com.snail.pojo.form.ShareForm;
+import com.snail.pojo.form.ShareTagForm;
 import com.snail.pojo.vo.ShareTagVo;
 import com.snail.service.base.IShareService;
 import com.snail.util.FTPUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,7 @@ import org.springframework.stereotype.Service;
 /**
  * 用户分享Service接口
  *
- * Created by panyuanyuan on 2017/10/15.
+ * @author panyuanyuan on 2017/10/15.
  */
 @Service
 @Slf4j
@@ -105,7 +107,74 @@ public class ShareServiceImpl implements IShareService {
      */
     @Override
     public List<ShareTagVo> getTagList() {
-        return shareTagMapper.selectAll();
+        ShareTagExample example = new ShareTagExample();
+        example.setOrderByClause("tag_name");
+        List<ShareTag> shareTags = shareTagMapper.selectByExample(example);
+        List<ShareTagVo> shareTagVos = new ArrayList<>(16);
+        for(ShareTag shareTag : shareTags) {
+            ShareTagVo shareTagVo = new ShareTagVo();
+            BeanUtils.copyProperties(shareTag, shareTagVo);
+            shareTagVos.add(shareTagVo);
+        }
+
+        return shareTagVos;
+    }
+
+    /**
+     * 更新标签
+     *
+     * @param tagForm 更新标签内容
+     * @return 更新结果false：失败，true：成功
+     */
+    @Override
+    public boolean updateTag(ShareTagForm tagForm) {
+        if(tagForm.getId() == null) {
+            log.error("参数错误：{}", "被更新的标签ID不能为空！");
+            throw new SnailClientException(ExceptionCode.REQUEST_ARGUMENT_NOT_BE_NULL.getCode(), ExceptionCode.REQUEST_ARGUMENT_NOT_BE_NULL.getDescription());
+        }
+        ShareTag tag = new ShareTag();
+        BeanUtils.copyProperties(tagForm, tag);
+        ShareTagExample example = new ShareTagExample();
+        example.createCriteria().andIdEqualTo(tag.getId());
+        int result = shareTagMapper.updateByExampleSelective(tag, example);
+
+        return result > 0 ? true : false;
+    }
+
+    /**
+     * 添加标签
+     *
+     * @param tagForm 添加的标签内容
+     * @return 添加结果
+     */
+    @Override
+    public boolean insertTag(ShareTagForm tagForm) {
+        ShareTag tag = new ShareTag();
+        Date date = new Date();
+        tag.setCreatAt(date);
+        tag.setUpdateAt(date);
+        BeanUtils.copyProperties(tagForm, tag);
+        int result = shareTagMapper.insert(tag);
+
+        return result > 0 ? true : false;
+    }
+
+    /**
+     * 根据标签ID查询标签
+     *
+     * @param id 标签ID
+     * @return 查询到的标签
+     */
+    @Override
+    public ShareTag selectTagById(Integer id) {
+        if(id == null) {
+            log.error("参数错误：{}", "被查询的标签ID不能为空！");
+            throw new SnailClientException(ExceptionCode.REQUEST_ARGUMENT_NOT_BE_NULL.getCode(), ExceptionCode.REQUEST_ARGUMENT_NOT_BE_NULL.getDescription());
+        }
+        ShareTagExample example = new ShareTagExample();
+        example.createCriteria().andIdEqualTo(id);
+
+        return shareTagMapper.selectByExample(example).get(0);
     }
 
     /**

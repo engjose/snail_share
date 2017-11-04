@@ -5,7 +5,7 @@ package com.snail.commen;
  */
 public enum  ResponseCode {
 
-    /** 成功的响应码 */
+    /** 请求成功的响应码 */
     SUCCESS(200, "SUCCESS"),
 
     /** 请求失败响应码 */
