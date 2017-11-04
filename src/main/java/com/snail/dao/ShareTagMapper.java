@@ -31,10 +31,10 @@ public interface ShareTagMapper {
      */
     @Insert({
         "insert into `share_tag` (`id`, `tag_name`, ",
-        "`tag_type`, `creat_at`, ",
+        "`category_id`, `creat_at`, ",
         "`update_at`)",
         "values (#{id,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, ",
-        "#{tagType,jdbcType=VARCHAR}, #{creatAt,jdbcType=TIMESTAMP}, ",
+        "#{categoryId,jdbcType=INTEGER}, #{creatAt,jdbcType=TIMESTAMP}, ",
         "#{updateAt,jdbcType=TIMESTAMP})"
     })
     int insert(ShareTag record);
