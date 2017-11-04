@@ -2,7 +2,9 @@ package com.snail.controller.portal;
 
 import com.snail.commen.ResponseCode;
 import com.snail.commen.ResultMap;
+import com.snail.pojo.domain.Employee;
 import com.snail.service.base.IShareService;
+import com.snail.service.base.IUserManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

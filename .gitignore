@@ -9,7 +9,6 @@
 
 #maven ignoer
 target/
-mybatisGenerator/
 
 classes/
 

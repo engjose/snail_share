@@ -10,8 +10,17 @@ public class ParameterThreadLocal {
     private static ThreadLocal<Integer> uid = new ThreadLocal();
     private static ThreadLocal<String> loginName = new ThreadLocal();
     private static ThreadLocal<String> token = new ThreadLocal();
+    private static ThreadLocal<String> app = new ThreadLocal<>();
 
     public ParameterThreadLocal() {
+    }
+
+    public static ThreadLocal<String> getApp() {
+        return app;
+    }
+
+    public static void setApp(ThreadLocal<String> app) {
+        ParameterThreadLocal.app = app;
     }
 
     public static ThreadLocal<Integer> getUid() {
