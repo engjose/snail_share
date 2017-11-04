@@ -58,9 +58,10 @@
 
         </javaClientGenerator>
 
-        <table tableName="share_info" delimitIdentifiers="true" delimitAllColumns="true"></table>
-        <table tableName="share_content" delimitIdentifiers="true" delimitAllColumns="true"></table>
+        <!--<table tableName="share_info" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="share_content" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="share_category" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
         <!--<table tableName="share_user" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
-
+        <table tableName="share_tag" delimitIdentifiers="true" delimitAllColumns="true"></table>
     </context>
 </generatorConfiguration>

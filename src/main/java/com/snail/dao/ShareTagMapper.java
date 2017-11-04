@@ -3,6 +3,8 @@ package com.snail.dao;
 import com.snail.pojo.domain.ShareTag;
 import com.snail.pojo.domain.ShareTagExample;
 import java.util.List;
+
+import com.snail.pojo.vo.ShareTagVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,10 +33,10 @@ public interface ShareTagMapper {
      */
     @Insert({
         "insert into `share_tag` (`id`, `tag_name`, ",
-        "`tag_type`, `creat_at`, ",
+        "`category_id`, `creat_at`, ",
         "`update_at`)",
         "values (#{id,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, ",
-        "#{tagType,jdbcType=VARCHAR}, #{creatAt,jdbcType=TIMESTAMP}, ",
+        "#{categoryId,jdbcType=INTEGER}, #{creatAt,jdbcType=TIMESTAMP}, ",
         "#{updateAt,jdbcType=TIMESTAMP})"
     })
     int insert(ShareTag record);
@@ -70,4 +72,11 @@ public interface ShareTagMapper {
      * @mbggenerated
      */
     int updateByExample(@Param("record") ShareTag record, @Param("example") ShareTagExample example);
+
+    /**
+     * 查询标签列表
+     *
+     * @return 标签列表
+     */
+    List<ShareTagVo> selectAll();
 }
