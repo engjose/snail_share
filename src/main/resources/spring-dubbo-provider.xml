@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+  <!-- 配置dubbo服务的项目 -->
+  <dubbo:application name="dubbo-share" />
+
+  <!-- 配置注册中心 -->
+  <dubbo:registry id="zk-dubbo" address="139.196.141.5:2181" protocol="zookeeper" />
+
+  <!-- 配置协议使用dubbo -->
+  <dubbo:protocol id="dubboProtocol" name="dubbo" port="20886" />
+
+  <!-- 配置提供者 -->
+  <dubbo:provider registry="zk-dubbo" protocol="dubboProtocol" />
+
+  <!-- 定义实现类:如下demo -->
+  <!--<bean name="userManageServiceImpl" class="com.snail.service.impl.UserManageServiceImpl" />-->
+
+  <!-- 定义服务:如下demo -->
+  <!--<dubbo:service interface="com.snail.service.base.IUserManagerService" ref="userManageServiceImpl"/>-->
+</beans>

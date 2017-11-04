@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 public class ShareServiceImpl implements IShareService {
 
     /** article存放的地址前缀 */
-    private static final String SHARE_URL_PREFIX = "http://admin.img.thinkerol.com/";
+    private static final String SHARE_URL_PREFIX = "http://article.thinkerol.com/";
 
     /** 设置文章头,防止乱码 */
     private static final String HTML_HEAD = "<!DOCTYPE html>\n"

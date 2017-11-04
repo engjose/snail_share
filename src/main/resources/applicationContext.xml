@@ -16,6 +16,8 @@
 
 
   <import resource="applicationContext-datasource.xml"/>
+  <import resource="spring-dubbo-provider.xml" />
+  <import resource="spring-dubbo-consumer.xml" />
 
 
 </beans>

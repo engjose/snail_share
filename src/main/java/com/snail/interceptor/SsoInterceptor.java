@@ -17,6 +17,7 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String xToken = request.getParameter("xToken");
+        String app = request.getParameter("app");
         Jedis jedis = JedisClientUtil.getJedis();
         String loginName = null;
         Integer userId = null;
@@ -35,7 +36,7 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
 
-        setUserParams(xToken, loginName, userId);
+        setUserParams(xToken, loginName, userId, app);
         return true;
     }
 
@@ -46,9 +47,10 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
      * @param loginName
      * @param userId
      */
-    private void setUserParams(String xToken, String loginName, Integer userId) {
+    private void setUserParams(String xToken, String loginName, Integer userId, String app) {
         ParameterThreadLocal.getToken().set(xToken);
         ParameterThreadLocal.getUid().set(userId);
         ParameterThreadLocal.getLoginName().set(loginName);
+        ParameterThreadLocal.getLoginName().set(app);
     }
 }
