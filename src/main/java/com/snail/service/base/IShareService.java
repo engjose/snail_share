@@ -1,6 +1,10 @@
 package com.snail.service.base;
 
+import com.snail.pojo.domain.ShareTag;
 import com.snail.pojo.form.ShareForm;
+import com.snail.pojo.vo.ShareTagVo;
+
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
@@ -26,4 +30,11 @@ public interface IShareService {
      * @param shareForm
      */
     String insertShare(ShareForm shareForm, HttpSession session);
+
+    /**
+     * 查询标签列表
+     *
+     * @return 标签列表
+     */
+    List<ShareTagVo> getTagList();
 }

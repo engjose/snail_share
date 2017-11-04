@@ -6,10 +6,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.snail.dao.ShareContentMapper;
 import com.snail.dao.ShareInfoMapper;
+import com.snail.dao.ShareTagMapper;
 import com.snail.pojo.domain.ShareContent;
 import com.snail.pojo.domain.ShareInfo;
 import com.snail.pojo.domain.ShareInfoExample;
+import com.snail.pojo.domain.ShareTag;
 import com.snail.pojo.form.ShareForm;
+import com.snail.pojo.vo.ShareTagVo;
 import com.snail.service.base.IShareService;
 import com.snail.util.FTPUtil;
 import java.io.File;
@@ -56,6 +59,9 @@ public class ShareServiceImpl implements IShareService {
     @Autowired
     private ShareContentMapper shareContentMapper;
 
+    @Autowired
+    private ShareTagMapper shareTagMapper;
+
     @Override
     public Map<String, Object> listShares(Integer pageNo, Integer pageSize) {
         //查询文章列表信息
@@ -90,6 +96,16 @@ public class ShareServiceImpl implements IShareService {
         shareInfoMapper.insert(shareInfo);
 
         return shareUrl;
+    }
+
+    /**
+     * 查询标签列表
+     *
+     * @return 标签列表
+     */
+    @Override
+    public List<ShareTagVo> getTagList() {
+        return shareTagMapper.selectAll();
     }
 
     /**
@@ -150,6 +166,5 @@ public class ShareServiceImpl implements IShareService {
 
         return SHARE_URL_PREFIX + contentId + ".html";
     }
-
 
 }

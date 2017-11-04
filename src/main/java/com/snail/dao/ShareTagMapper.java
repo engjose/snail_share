@@ -3,6 +3,8 @@ package com.snail.dao;
 import com.snail.pojo.domain.ShareTag;
 import com.snail.pojo.domain.ShareTagExample;
 import java.util.List;
+
+import com.snail.pojo.vo.ShareTagVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -70,4 +72,11 @@ public interface ShareTagMapper {
      * @mbggenerated
      */
     int updateByExample(@Param("record") ShareTag record, @Param("example") ShareTagExample example);
+
+    /**
+     * 查询标签列表
+     *
+     * @return 标签列表
+     */
+    List<ShareTagVo> selectAll();
 }

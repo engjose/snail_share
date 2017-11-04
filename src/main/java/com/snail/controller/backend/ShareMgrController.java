@@ -38,4 +38,14 @@ public class ShareMgrController {
     public ResultMap addShare(@RequestBody ShareForm shareForm, HttpSession session) {
         return ResultMap.getResultMap(200, "添加成功", iShareService.insertShare(shareForm, session));
     }
+
+    /**
+     * 查询标签列表
+     *
+     * @return 标签列表
+     */
+    @RequestMapping(value = "/tags", method = RequestMethod.GET)
+    public ResultMap getTagList() {
+        return ResultMap.getResultMap(200, "查询成功", iShareService.getTagList());
+    }
 }
