@@ -23,10 +23,12 @@ public class SsoInterceptor extends HandlerInterceptorAdapter {
         Integer userId = null;
         if (StringUtils.isNotBlank(xToken)) {
             String loginNameAndUserId = jedis.get(xToken);
-            String[] strArr = loginNameAndUserId.split(":");
-            if(strArr.length > 0) {
-                loginName = strArr[0];
-                userId = Integer.valueOf(strArr[1]);
+            if(StringUtils.isNotBlank(loginNameAndUserId)) {
+                String[] strArr = loginNameAndUserId.split(":");
+                if(strArr.length > 0) {
+                    loginName = strArr[0];
+                    userId = Integer.valueOf(strArr[1]);
+                }
             }
             JedisClientUtil.closeJedis(jedis);
         }

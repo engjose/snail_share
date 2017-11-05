@@ -10,6 +10,7 @@ import com.snail.dao.ShareContentMapper;
 import com.snail.dao.ShareInfoMapper;
 import com.snail.dao.ShareTagMapper;
 import com.snail.exception.SnailClientException;
+import com.snail.interceptor.ParameterThreadLocal;
 import com.snail.pojo.domain.*;
 import com.snail.pojo.form.ShareForm;
 import com.snail.pojo.form.ShareTagForm;
@@ -98,6 +99,8 @@ public class ShareServiceImpl implements IShareService {
         shareInfo.setStarCount(0);
         shareInfo.setCreateAt(new Date());
         shareInfo.setUpdateAt(new Date());
+        shareInfo.setUserId(ParameterThreadLocal.getUid().get());
+        shareInfo.setLoginName(ParameterThreadLocal.getLoginName().get());
         shareInfoMapper.insert(shareInfo);
 
         return shareUrl;
