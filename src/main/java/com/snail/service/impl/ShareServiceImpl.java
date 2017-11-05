@@ -43,6 +43,8 @@ public class ShareServiceImpl implements IShareService {
     /** article存放的地址前缀 */
     private static final String SHARE_URL_PREFIX = "http://article.thinkerol.com/";
 
+    private static final String USER_ICON_PREFIX = "http://qiniu.thinkerol.com/";
+
     /** 设置文章头,防止乱码 */
     private static final String HTML_HEAD = "<!DOCTYPE html>\n"
         + "<html lang=\"en\">\n"
@@ -74,6 +76,7 @@ public class ShareServiceImpl implements IShareService {
         List<ShareInfo> shareInfos = shareInfoMapper.selectByExample(shareInfoExample);
         for (ShareInfo shareInfo: shareInfos) {
             shareInfo.setShareUrl(SHARE_URL_PREFIX + shareInfo.getShareUrl());
+            shareInfo.setUserIcon(USER_ICON_PREFIX + shareInfo.getShareIcon());
         }
         PageInfo<ShareInfo> pageInfo = new PageInfo(shareInfos);
 
@@ -86,7 +89,6 @@ public class ShareServiceImpl implements IShareService {
     @Override
     public String insertShare(@NonNull ShareForm shareForm, HttpSession session) {
         Integer contentId = insertContent(shareForm.getContent());
-
         String shareUrl = creactShareHtml(contentId, shareForm.getContent(), session);
 
         ShareInfo shareInfo = new ShareInfo();
@@ -101,6 +103,9 @@ public class ShareServiceImpl implements IShareService {
         shareInfo.setUpdateAt(new Date());
         shareInfo.setUserId(ParameterThreadLocal.getUid().get());
         shareInfo.setLoginName(ParameterThreadLocal.getLoginName().get());
+        String shareIcon = shareForm.getShareIcon();
+        String iconName = shareIcon.substring(shareIcon.lastIndexOf("/") + 1);
+        shareInfo.setShareIcon(iconName);
         shareInfoMapper.insert(shareInfo);
 
         return shareUrl;
