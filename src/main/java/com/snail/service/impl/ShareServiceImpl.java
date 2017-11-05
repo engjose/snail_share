@@ -76,7 +76,7 @@ public class ShareServiceImpl implements IShareService {
         List<ShareInfo> shareInfos = shareInfoMapper.selectByExample(shareInfoExample);
         for (ShareInfo shareInfo: shareInfos) {
             shareInfo.setShareUrl(SHARE_URL_PREFIX + shareInfo.getShareUrl());
-            shareInfo.setUserIcon(USER_ICON_PREFIX + shareInfo.getShareIcon());
+            shareInfo.setShareIcon(USER_ICON_PREFIX + shareInfo.getShareIcon());
         }
         PageInfo<ShareInfo> pageInfo = new PageInfo(shareInfos);
 
