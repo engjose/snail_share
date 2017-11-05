@@ -37,8 +37,7 @@
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**"/>
-      <mvc:exclude-mapping path="/shareMgr/articles" />
-      <mvc:exclude-mapping path="/redirectLogin" />
+      <!--<mvc:exclude-mapping path="/shareMgr/articles"/>-->
       <bean class="com.snail.interceptor.SsoInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
